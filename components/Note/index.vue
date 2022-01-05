@@ -25,9 +25,12 @@ export default {
   methods: {
     updateTextNote(e, id) {
       const { textContent } = e.target;
-      console.log(textContent);
+      const textUpdateObject = {
+        ...this.noteInfo,
+        name: textContent,
+      };
+      this.$emit("updateNote", textUpdateObject);
     },
-
   },
 };
 </script>

@@ -6,6 +6,7 @@
         v-for="note in noteItems"
         :key="note.id"
         contenteditable
+        @updateNote="onUpdateNote"
       />
     </div>
   </div>
@@ -67,6 +68,25 @@ export default {
         },
       ],
     };
+  },
+  mounted(){
+    this.init();
+  },
+  methods: {
+    onUpdateNote(item) {
+      const noteIndex = this.noteItems.findIndex((note) => note.id === item.id);
+      if (noteIndex > -1) {
+        this.noteItems[noteIndex].name = item.name;
+        localStorage.setItem("notes", JSON.stringify(this.noteItems));
+      }
+    },
+    init(){
+      const listNoteString = localStorage.getItem("notes");
+      if(listNoteString){
+        const listNoteToArray = JSON.parse(listNoteString)
+        this.noteItems = listNoteToArray
+      }
+    }
   },
 };
 </script>
